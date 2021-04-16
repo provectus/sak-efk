@@ -59,13 +59,7 @@ variable "argocd" {
 variable "filebeat_conf" {
   type        = map(string)
   description = "A custom configuration for deployment"
-  default = {
-    "filebeat.inputs" = {
-      "type"   = "container"
-      "paths"  = ["/var/log/containers/*.log"]
-      "stream" = "all"
-    }
-  }
+  default = {}
 }
 
 variable "kibana_conf" {
