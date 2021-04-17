@@ -91,3 +91,9 @@ variable "elasticDataSize" {
   description = "Request pvc size for elastic volume data size"
   default     = "30Gi"
 }
+
+variable "ingress_annotations" {
+  type        = map(string)
+  description = "A set of annotations for ArgoCD Ingress"
+  default     = {}
+}

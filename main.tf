@@ -135,9 +135,9 @@ locals {
     "volumeClaimTemplate.resources.requests.storage" = var.elasticDataSize
   }
   kibana_conf_defaults = {
-    "elasticsearchHosts" = "http://elasticsearch-master:9200"
-    "ingress.enabled"    = "true"
-    "ingress.hosts[0]"   = "kibana.${var.domains[0]}"
+    "elasticsearchHosts"         = "http://elasticsearch-master:9200"
+    "ingress.enabled"            = "true"
+    "ingress.hosts[0]"           = "kibana.${var.domains[0]}"
     "ingress.tls[0].secretName"  = "kibana-tls"
     "ingress.tls[0].hosts[0]"    = "kibana.${var.domains[0]}"
   }
@@ -204,13 +204,23 @@ locals {
         "targetRevision" = var.kibana_chart_version
         "chart"          = local.kibana_chart
         "helm" = {
-          "parameters" = values({
-            for key, value in local.kibana_conf :
-            key => {
-              "name"  = key
-              "value" = tostring(value)
-            }
-          })
+          "parameters" = concat(
+            values({
+              for key, value in local.kibana_conf :
+              key => {
+                "name"  = key
+                "value" = tostring(value)
+              }
+            }),
+            values({
+              for key, value in var.ingress_annotations :
+              key => {
+                "name"  = "server.ingress.annotations.${replace(key, ".", "\\.")}"
+                "value" = tostring(value)
+                "forceString" = true
+              }
+            })
+          )
         }
       }
       "syncPolicy" = {
