@@ -138,6 +138,8 @@ locals {
     "elasticsearchHosts" = "http://elasticsearch-master:9200"
     "ingress.enabled"    = "true"
     "ingress.hosts[0]"   = "kibana.${var.domains[0]}"
+    "tls[0].secretName"  = "kibana-tls"
+    "tls[0].hosts[0]"    = "kibana.${var.domains[0]}"
   }
   filebeat_conf_defaults = {
     "daemonset.filebeatConfig.filebeat\\.yml" = yamlencode(
