@@ -215,7 +215,7 @@ locals {
             values({
               for key, value in var.ingress_annotations :
               key => {
-                "name"  = "server.ingress.annotations.${replace(key, ".", "\\.")}"
+                "name"  = "ingress.annotations.${replace(key, ".", "\\.")}"
                 "value" = tostring(value)
                 "forceString" = true
               }
