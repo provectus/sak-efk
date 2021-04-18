@@ -57,7 +57,7 @@ variable "argocd" {
 }
 
 variable "filebeat_conf" {
-  type        = map(string)
+  type        = any
   description = "A custom configuration for deployment"
   default = {}
 }

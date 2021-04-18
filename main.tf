@@ -97,7 +97,7 @@ resource "helm_release" "filebeat" {
   timeout       = 1200
 
   dynamic "set" {
-    for_each = merge(local.filebeat_conf)
+    for_each = local.filebeat_conf
 
     content {
       name  = set.key
@@ -111,7 +111,6 @@ resource "local_file" "filebeat" {
   content  = yamlencode(local.filebeat_application)
   filename = "${path.root}/${var.argocd.path}/${local.filebeat_name}.yaml"
 }
-
 
 locals {
   #elasticsearch
@@ -128,7 +127,8 @@ locals {
   filebeat_name       = "filebeat"
   filebeat_repository = "https://helm.elastic.co/"
   filebeat_chart      = "filebeat"
-  filebeat_conf       = merge(local.filebeat_conf_defaults, var.filebeat_conf)
+  filebeat_conf       = local.filebeat_conf_merge
+
   elastic_conf_defaults = {
     "replicas"                                       = var.elasticReplicas
     "minimumMasterNodes"                             = var.elasticMinMasters
@@ -141,16 +141,22 @@ locals {
     "ingress.tls[0].secretName"  = "kibana-tls"
     "ingress.tls[0].hosts[0]"    = "kibana.${var.domains[0]}"
   }
-  filebeat_conf_defaults = {
-    "daemonset.filebeatConfig.filebeat\\.yml" = yamlencode(
+
+  filebeat_conf_merge = {
+    "filebeatConfig.filebeat\\.yml" = yamlencode(
       [{
-        "output.elasticsearch" = {
-          "host"  = "$\\{NODE_NAME\\}"
-          "hosts" = "$\\{ELASTICSEARCH_HOSTS:elasticsearch-master:9200\\}"
-        }
+        for key, value in merge(local.filebeat_conf_defaults, var.filebeat_conf) :
+        key => value
       }]
     )
   }
+  filebeat_conf_defaults = {
+      "output.elasticsearch" = {
+        "host"  = "$\\{NODE_NAME\\}"
+        "hosts" = "$\\{ELASTICSEARCH_HOSTS:elasticsearch-master:9200\\}"
+      }
+  }
+
   elastic_application = {
     "apiVersion" = "argoproj.io/v1alpha1"
     "kind"       = "Application"
