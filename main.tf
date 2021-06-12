@@ -255,13 +255,7 @@ locals {
         "targetRevision" = var.filebeat_chart_version
         "chart"          = local.filebeat_chart
         "helm" = {
-          "parameters" = values({
-            for key, value in local.filebeat_conf :
-            key => {
-              "name"  = key
-              "value" = tostring(value)
-            }
-          })
+          "values" = local.filebeat_conf
         }
       }
       "syncPolicy" = {
