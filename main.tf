@@ -85,26 +85,26 @@ resource "local_file" "kibana" {
 }
 
 #Filebeat
-resource "helm_release" "filebeat" {
-  count = 1 - local.argocd_enabled
+# resource "helm_release" "filebeat" {
+#   count = 1 - local.argocd_enabled
 
-  name          = local.filebeat_name
-  repository    = local.filebeat_repository
-  chart         = local.filebeat_chart
-  version       = var.filebeat_chart_version
-  namespace     = local.namespace
-  recreate_pods = true
-  timeout       = 1200
+#   name          = local.filebeat_name
+#   repository    = local.filebeat_repository
+#   chart         = local.filebeat_chart
+#   version       = var.filebeat_chart_version
+#   namespace     = local.namespace
+#   recreate_pods = true
+#   timeout       = 1200
 
-  dynamic "set" {
-    for_each = local.filebeat_conf
+#   dynamic "set" {
+#     for_each = local.filebeat_conf
 
-    content {
-      name  = set.key
-      value = set.value
-    }
-  }
-}
+#     content {
+#       name  = set.key
+#       value = set.value
+#     }
+#   }
+# }
 
 resource "local_file" "filebeat" {
   count    = local.argocd_enabled
