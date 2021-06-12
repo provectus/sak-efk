@@ -143,13 +143,9 @@ locals {
   }
 
   filebeat_conf_merge = {
-    "filebeatConfig.filebeat\\.yml" = yamlencode(
-      [{
-        for key, value in merge(local.filebeat_conf_defaults, var.filebeat_conf) :
-        key => value
-      }]
-    )
+    "filebeatConfig.filebeat\\.yml" = merge(local.filebeat_conf_defaults, var.filebeat_conf)
   }
+  
   filebeat_conf_defaults = {
       "output.elasticsearch" = {
         "host"  = "$\\{NODE_NAME\\}"
