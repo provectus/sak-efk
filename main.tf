@@ -135,25 +135,24 @@ locals {
     "volumeClaimTemplate.resources.requests.storage" = var.elasticDataSize
   }
   kibana_conf_defaults = {
-    "elasticsearchHosts"         = "http://elasticsearch-master:9200"
-    "ingress.enabled"            = "true"
-    "ingress.hosts[0]"           = "kibana.${var.domains[0]}"
-    "ingress.tls[0].secretName"  = "kibana-tls"
-    "ingress.tls[0].hosts[0]"    = "kibana.${var.domains[0]}"
+    "elasticsearchHosts"        = "http://elasticsearch-master:9200"
+    "ingress.enabled"           = "true"
+    "ingress.hosts[0]"          = "kibana.${var.domains[0]}"
+    "ingress.tls[0].secretName" = "kibana-tls"
+    "ingress.tls[0].hosts[0]"   = "kibana.${var.domains[0]}"
   }
 
-  filebeat_conf_merge = yamlencode(
-  {
-    "filebeatConfig" = {
+  filebeat_conf_merge = {
+    "daemonset.filebeatConfig" = {
       "filebeat\\.yml" = merge(local.filebeat_conf_defaults, var.filebeat_conf)
     }
-  })
+  }
 
   filebeat_conf_defaults = {
-      "output.elasticsearch" = {
-        "host"  = "$\\{NODE_NAME\\}"
-        "hosts" = "$\\{ELASTICSEARCH_HOSTS:elasticsearch-master:9200\\}"
-      }
+    "output.elasticsearch" = {
+      "host"  = "$\\{NODE_NAME\\}"
+      "hosts" = "$\\{ELASTICSEARCH_HOSTS:elasticsearch-master:9200\\}"
+    }
   }
 
   elastic_application = {
@@ -220,8 +219,8 @@ locals {
             values({
               for key, value in var.ingress_annotations :
               key => {
-                "name"  = "ingress.annotations.${replace(key, ".", "\\.")}"
-                "value" = tostring(value)
+                "name"        = "ingress.annotations.${replace(key, ".", "\\.")}"
+                "value"       = tostring(value)
                 "forceString" = true
               }
             })
@@ -254,7 +253,7 @@ locals {
         "targetRevision" = var.filebeat_chart_version
         "chart"          = local.filebeat_chart
         "helm" = {
-          "values" = local.filebeat_conf
+          "values" = yamlencode(local.filebeat_conf)
         }
       }
       "syncPolicy" = {
