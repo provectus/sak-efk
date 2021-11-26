@@ -23,6 +23,8 @@ First, you need to create a Google OAuth Client:
 * Click Create
 * Copy the Client ID and Client Secret from the ‘OAuth Client’ modal
 
+## Config templates.
+Visit our [Config templates](./CONFIGS.md) and find some usable config templates.
 
 ## Example how add with module
 ```
