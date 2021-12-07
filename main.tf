@@ -1,8 +1,8 @@
-data "aws_eks_cluster" "this" {
-  name = var.cluster_name
-}
+#data "aws_eks_cluster" "this" {
+#  name = var.cluster_name
+#}
 #
-data "aws_region" "current" {}
+# data "aws_region" "current" {}
 
 resource "kubernetes_namespace" "this" {
   count = var.namespace == "" ? 1 - local.argocd_enabled : 0

@@ -1,9 +1,9 @@
 # For depends_on queqe
-variable "module_depends_on" {
-  type = list
-  default = []
-  description = "A list of modules that module depends on"
-}
+#variable "module_depends_on" {
+#  type = list
+#  default = []
+#  description = "A list of modules that module depends on"
+#}
 
 variable "namespace" {
   type        = string
@@ -17,11 +17,11 @@ variable "namespace_name" {
   description = "A name of namespace for creating"
 }
 
-variable "config_path" {
-  type = string
-  description = "location of the kubeconfig file"
-  default     = "~/.kube/config"
-}
+#variable "config_path" {
+#  type = string
+#  description = "location of the kubeconfig file"
+#  default     = "~/.kube/config"
+#}
 
 variable "cluster_name" {
   type        = string
