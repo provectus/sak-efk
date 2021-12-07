@@ -2,7 +2,7 @@ data "aws_eks_cluster" "this" {
   name = var.cluster_name
 }
 
-data "aws_region" "current" {}
+# data "aws_region" "current" {}
 
 resource "kubernetes_namespace" "this" {
   count = var.namespace == "" ? 1 - local.argocd_enabled : 0
@@ -130,9 +130,9 @@ locals {
   filebeat_conf       = local.filebeat_conf_merge
 
   elastic_conf_defaults = {
-    "replicas"                                       = var.elasticReplicas
-    "minimumMasterNodes"                             = var.elasticMinMasters
-    "volumeClaimTemplate.resources.requests.storage" = var.elasticDataSize
+    "replicas"                                       = var.elastic_replicas
+    "minimumMasterNodes"                             = var.elastic_min_masters
+    "volumeClaimTemplate.resources.requests.storage" = var.elastic_data_size
   }
   kibana_conf_defaults = {
     "elasticsearchHosts"        = "http://elasticsearch-master:9200"
