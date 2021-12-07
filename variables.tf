@@ -1,9 +1,7 @@
 # For depends_on queqe
-#variable "module_depends_on" {
-#  type = list
-#  default = []
-#  description = "A list of modules that module depends on"
-#}
+variable "module_depends_on" {
+  default = []
+}
 
 variable "namespace" {
   type        = string
@@ -17,11 +15,10 @@ variable "namespace_name" {
   description = "A name of namespace for creating"
 }
 
-#variable "config_path" {
-#  type = string
-#  description = "location of the kubeconfig file"
-#  default     = "~/.kube/config"
-#}
+variable "config_path" {
+  description = "location of the kubeconfig file"
+  default     = "~/.kube/config"
+}
 
 variable "cluster_name" {
   type        = string
@@ -77,19 +74,19 @@ variable "elastic_conf" {
   default     = {}
 }
 
-variable "elastic_replicas" {
+variable "elasticReplicas" {
   type        = string
   description = "Number of elasticsearch nodes"
   default     = "3"
 }
 
-variable "elastic_min_masters" {
+variable "elasticMinMasters" {
   type        = string
   description = "Number of minimum elasticsearch master nodes. Keep this number low or equals that Replicas"
   default     = "2"
 }
 
-variable "elastic_data_size" {
+variable "elasticDataSize" {
   type        = string
   description = "Request pvc size for elastic volume data size"
   default     = "30Gi"
