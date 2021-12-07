@@ -1,7 +1,7 @@
 data "aws_eks_cluster" "this" {
   name = var.cluster_name
 }
-## comment
+## comment 2
 data "aws_region" "current" {}
 
 resource "kubernetes_namespace" "this" {
