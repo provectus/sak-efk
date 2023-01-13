@@ -29,7 +29,7 @@ First, you need to create a Google OAuth Client:
 module "efk" {
   depends_on = [module.argocd]
   source            = "github.com/provectus/sak-efk"
-  cluster_name      = module.kubernetes.cluster_name
+  cluster_name      = module.eks.cluster_id
   argocd            = module.argocd.state
   domains           = local.domain
   kibana_conf       = {
