@@ -2,6 +2,11 @@
 
 https://helm.elastic.co/
 
+## Requirements
+
+```
+terraform >= 1.1
+ ```
 
 ## Prerequisite
 
