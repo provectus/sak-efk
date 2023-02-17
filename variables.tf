@@ -58,24 +58,6 @@ variable "elastic_conf" {
   default     = {}
 }
 
-variable "elasticReplicas" {
-  type        = string
-  description = "Number of elasticsearch nodes"
-  default     = "3"
-}
-
-variable "elasticMinMasters" {
-  type        = string
-  description = "Number of minimum elasticsearch master nodes. Keep this number low or equals that Replicas"
-  default     = "2"
-}
-
-variable "elasticDataSize" {
-  type        = string
-  description = "Request pvc size for elastic volume data size"
-  default     = "30Gi"
-}
-
 variable "ingress_annotations" {
   type        = map(string)
   description = "A set of annotations for ArgoCD Ingress"
