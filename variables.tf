@@ -1,8 +1,3 @@
-# For depends_on queqe
-variable "module_depends_on" {
-  default = []
-}
-
 variable "namespace" {
   type        = string
   default     = ""
@@ -13,17 +8,6 @@ variable "namespace_name" {
   type        = string
   default     = "logging"
   description = "A name of namespace for creating"
-}
-
-variable "config_path" {
-  description = "location of the kubeconfig file"
-  default     = "~/.kube/config"
-}
-
-variable "cluster_name" {
-  type        = string
-  default     = null
-  description = "A name of the Amazon EKS cluster"
 }
 
 variable "elastic_chart_version" {
@@ -59,7 +43,7 @@ variable "argocd" {
 variable "filebeat_conf" {
   type        = any
   description = "A custom configuration for deployment"
-  default = {}
+  default     = {}
 }
 
 variable "kibana_conf" {
@@ -72,24 +56,6 @@ variable "elastic_conf" {
   type        = map(string)
   description = "A custom configuration for deployment"
   default     = {}
-}
-
-variable "elasticReplicas" {
-  type        = string
-  description = "Number of elasticsearch nodes"
-  default     = "3"
-}
-
-variable "elasticMinMasters" {
-  type        = string
-  description = "Number of minimum elasticsearch master nodes. Keep this number low or equals that Replicas"
-  default     = "2"
-}
-
-variable "elasticDataSize" {
-  type        = string
-  description = "Request pvc size for elastic volume data size"
-  default     = "30Gi"
 }
 
 variable "ingress_annotations" {
